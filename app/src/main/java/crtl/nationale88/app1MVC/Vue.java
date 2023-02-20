@@ -27,6 +27,8 @@ public class Vue extends LinearLayout implements Observer{
         RefM = m;
         RefC = c;
 
+        RefM.addObserver(this);
+
         btnPlus = new Button(context);
         btnMoin = new Button(context);
         txt = new TextView(context);
