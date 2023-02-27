@@ -13,13 +13,19 @@ public class Modele extends Observable {
 
     //function to add
     void plus(){
-        if(cpt<125)
+        if(cpt<125){
             cpt++;
+            setChanged();
+            notifyObservers();
+        }
     }
 
     void menos(){
-        if(cpt>65)
+        if(cpt>65){
             cpt--;
+            setChanged();
+            notifyObservers();
+        }
     }
 
 }

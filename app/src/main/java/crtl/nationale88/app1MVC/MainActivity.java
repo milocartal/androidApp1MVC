@@ -14,6 +14,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         v = new Vue(this, c, m);
         c.setV(v);
+        m.addObserver(v);
         setContentView(v);
     }
 }

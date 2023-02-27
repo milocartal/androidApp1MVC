@@ -1,8 +1,10 @@
 package crtl.nationale88.app1MVC;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.TextClock;
 import android.widget.TextView;
 
 import java.util.Observable;
@@ -13,6 +15,7 @@ public class Vue extends LinearLayout implements Observer{
     Button btnPlus;
     Button btnMoin;
     TextView txt;
+    TextClock clock;
 
     //Def ID Button
     final int BTN_PLUS = 0;
@@ -29,27 +32,58 @@ public class Vue extends LinearLayout implements Observer{
 
         RefM.addObserver(this);
 
+        //btnPlus set up
         btnPlus = new Button(context);
-        btnMoin = new Button(context);
-        txt = new TextView(context);
-
         btnPlus.setText("+");
-        btnMoin.setText("-");
-        txt.setText(Integer.toString(m.cpt));
-
         btnPlus.setId(BTN_PLUS);
-        btnMoin.setId(BTN_MOIN);
-
         btnPlus.setOnClickListener(c);
-        btnMoin.setOnClickListener(c);
+        btnPlus.setTextSize(30);
 
+        //btnMoin set Up
+        btnMoin = new Button(context);
+        btnMoin.setText("-");
+        btnMoin.setId(BTN_MOIN);
+        btnMoin.setOnClickListener(c);
+        btnMoin.setTextSize(30);
+
+        //txt set up
+        txt = new TextView(context);
+        txt.setText(Integer.toString(m.cpt));
+        txt.setTextColor(Color.argb(255,255,255,255));
+        txt.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        txt.setTextSize(40);
+
+        clock=new TextClock(context);
+        clock.setTextAlignment(TEXT_ALIGNMENT_CENTER);
+        clock.setTextSize(50);
+        clock.setTextColor(Color.argb(255,125,0,125));
+
+        //Add view of all
+        addView(clock);
         addView(btnPlus);
         addView(txt);
         addView(btnMoin);
+
     }
 
     @Override
     public void update(Observable observable, Object o) {
         txt.setText(Integer.toString(RefM.cpt));
+        if(RefM.cpt == RefM.MAX){
+            btnPlus.setEnabled(false);
+        }
+        if(RefM.cpt == RefM.MIN){
+            btnMoin.setEnabled(false);
+        }
+        if(RefM.cpt > RefM.MIN && RefM.cpt < RefM.MAX){
+            btnMoin.setEnabled(true);
+            btnPlus.setEnabled(true);
+        }
+        if(RefM.cpt >= 100){
+            txt.setTextColor(Color.argb(255,255,0,0));
+        }
+        if(RefM.cpt < 100){
+            txt.setTextColor(Color.argb(255,255,255,255));
+        }
     }
 }
